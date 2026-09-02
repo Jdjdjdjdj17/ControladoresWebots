@@ -1,0 +1,58 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/BakelitePlastic.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/CarpetFibers.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.09995665758003743 -0.001461932695745323 0.9949907182271703 3.0864218788406146
+  position 0.8158741207812578 0.0005451598263252096 0.248304017094331
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 4 4
+}
+Robot {
+  translation 0 0 0.09
+  rotation 0 1 0 0
+  children [
+    Propeller {
+      shaftAxis 0 0 1
+      device RotationalMotor {
+        name "propeller1"
+      }
+      fastHelix Solid {
+        translation 0 0 0.1
+        children [
+          Shape {
+            appearance CarpetFibers {
+            }
+            geometry Box {
+              size 0.2 0.02 0.02
+            }
+          }
+        ]
+      }
+    }
+    Shape {
+      appearance BakelitePlastic {
+      }
+      geometry DEF robot Box {
+        size 0.2 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE robot
+  physics Physics {
+    density -1
+    mass 1
+  }
+  controller "helicopter"
+}
