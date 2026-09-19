@@ -3,97 +3,118 @@
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/Copper.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/DamascusSteel.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/OsbWood.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/GlossyPaint.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/ShinyLeather.proto"
 
 WorldInfo {
+  basicTimeStep 4
 }
 Viewpoint {
-  orientation 0.048758455871315894 0.019490576250415552 -0.9986204135798906 2.829855993008047
-  position 0.4170956303938248 0.3920624959963408 0.7808128748663458
+  orientation 0.04934730848169679 0.9327435171626234 -0.35714755261195774 0.2940709108825686
+  position -0.41073937862929505 0.34149174939308985 2.1130995215493975
 }
 TexturedBackground {
 }
 TexturedBackgroundLight {
 }
 RectangleArena {
-  floorSize 8 6
-  floorTileSize 0.34 0.34
+  translation 0 0 1.19
+  floorSize 6 8
 }
 Solid {
-  translation 0 0 0.27
+  translation 0 0.01 1.55
   children [
     Solid {
       children [
         Shape {
-          appearance OsbWood {
-          }
-          geometry DEF GEOMETRIA_MESA Box {
-            size 0.7 0.5 0.76
+          geometry Box {
+            size 0.1 0.1 0.1
           }
         }
       ]
-      boundingObject USE GEOMETRIA_MESA
+    }
+    Shape {
+      appearance OsbWood {
+      }
+      geometry Box {
+        size 0.7 0.5 0.76
+      }
     }
   ]
-  name "mesa"
+  name "MESA"
 }
 Robot {
-  translation 0 0.235 0.66
+  translation 0 0.27 1.94
   children [
-    Solid {
-      translation 0 0 -1.5680463327671923e-05
-      children [
-        Shape {
-          appearance Copper {
-          }
-          geometry Box {
-            size 0.01 0.035 0.0211
-          }
-        }
-      ]
-      name "tubo"
-      linearVelocity 0 0 -1.2139210832630653e-07
+    Shape {
+      appearance OsbWood {
+      }
+      geometry Box {
+        size 0.01 0.0305 0.0211
+      }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 6.279999998779871
         axis 0 1 0
-        anchor 0 0.0178 0
-        dampingConstant 0.01
+        dampingConstant 0.001
       }
       device [
-        DEF motor RotationalMotor {
-          name "motor"
-        }
         PositionSensor {
           name "encoder"
         }
+        RotationalMotor {
+          name "motor"
+        }
       ]
       endPoint Solid {
-        translation -0.00022297092678081386 0.018000000219742296 0.06998370399960545
-        rotation 0 1 0 6.274999998779886
+        rotation 0 0.9999999999999999 0 0.005000000000007672
         children [
-          Shape {
-            appearance DamascusSteel {
-            }
-            geometry Cylinder {
+          Pose {
+            translation 0 0.0178 0.07
+            children [
+              Solid {
+                translation 0 0 0.08
+                children [
+                  DEF esfera_pendulo Shape {
+                    appearance ShinyLeather {
+                      colorOverride 0.8 0.8 0.9
+                    }
+                    geometry Sphere {
+                      radius 0.015
+                    }
+                  }
+                ]
+                boundingObject USE esfera_pendulo
+                physics Physics {
+                }
+              }
+              Shape {
+                appearance GlossyPaint {
+                  baseColor 0.4 1 1
+                }
+                geometry Cylinder {
+                  height 0.14
+                  radius 0.0025
+                }
+              }
+            ]
+          }
+        ]
+        boundingObject Pose {
+          translation 0 0.0178 0.07
+          children [
+            Cylinder {
               height 0.14
               radius 0.0025
             }
-          }
-        ]
+          ]
+        }
         physics Physics {
           density 1240
         }
-        linearVelocity -9.076386479140056e-09 -1.335600532215541e-15 -1.2701650005744508e-07
-        angularVelocity 9.636519504149715e-15 -2.194976589156723e-08 -1.4679082945022303e-13
       }
     }
   ]
-  recognitionColors [
-    0 0 0
-  ]
-  controller "pendulo"
+  controller "Controlador_Pendulo"
 }
